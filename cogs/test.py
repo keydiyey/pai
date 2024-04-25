@@ -1,9 +1,10 @@
-import os
-from PIL import Image
-
-img  = os.getcwd()
-os.chdir("\pai 2.0\") 
+import json
+with open('./data/user_info.json', encoding = "utf8") as a:
+       data = json.load(a)
 
 
-print(img)
-
+if '845699992886050847' in data:
+    
+    print (data['845699992886050847'])
+    
+else: print (None)

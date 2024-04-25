@@ -1,8 +1,10 @@
 import discord #upm package(py-cord)
 from discord.ext import commands
-import design
-import paiconomy as pc
 from discord.commands import SlashCommandGroup
+
+import ui
+
+
 
 class Help(commands.Cog):
 	def __init__(self, bot):
@@ -12,12 +14,9 @@ class Help(commands.Cog):
 	async def help(self, ctx:discord.ApplicationContext):
 		'''ephemeral = true'''
 		description = "idk"
-		
 		embed = discord.Embed(description = description, color = 0xff8c69)
 		embed.set_author(name = "Pai Commands", icon_url = str(self.bot.user.avatar.url))
-		
-		
-		return await ctx.respond(embed=embed, view = design.helpView())
+		return await ctx.respond(embed=embed, ephemeral = True)
 
 	@commands.slash_command(name = "changelog", description = "What's New?")
 	async def changelog(self, ctx:discord.ApplicationContext):

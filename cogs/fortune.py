@@ -33,7 +33,7 @@ class SlipButton(Button):
 
             embed2 = discord.Embed(title = title, description = desc, color = 0xf5e2e4)
             embed2.set_thumbnail(url = "https://static.wikia.nocookie.net/gensin-impact/images/b/b0/Item_Fortune_Slip_Opened.png/revision/latest/scale-to-width-down/256?cb=20210725221204")
-            await interaction.response.edit_message(embed = embed2, view = None)
+            await interaction.reply.edit_message(embed = embed2, view = None)
     except Exception as e:
         print(e)
 
@@ -47,7 +47,7 @@ class Fortune(commands.Cog):
     async def fortune(self, ctx):
         try:
             title = "Fortune Slip Box"
-            text = f"There’s a chance every day to receive a fortune slip…\nThe procedure is as follows: shake a bamboo slip from Fortune Slip Box, and exchange that bamboo slip for a Fortune Slip with Pai.\nWould you like to try your luck today?"
+            text = f"There's a chance every day to receive a fortune slip…\nThe procedure is as follows: shake a bamboo slip from Fortune Slip Box, and exchange that bamboo slip for a Fortune Slip with Pai.\nWould you like to try your luck today?"
             slip_button = SlipButton(label = "Take a slip...", style = discord.ButtonStyle.green)
 
             embed = discord.Embed(title = title, description = text, color = 0xf5e2e4)
@@ -57,8 +57,10 @@ class Fortune(commands.Cog):
             view.add_item(slip_button)
 
             await ctx.send(embed = embed, view = view)
+            
         except Exception as e:
-            print (e)
+            embed = discord.Embed(title = title, description = "You are on cooldown.", color = 0xf5e2e4)
+            await ctx.send(embed = embed, view = None)
 
 
 def setup(bot):

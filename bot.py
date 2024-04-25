@@ -1,5 +1,7 @@
 import os
 import discord
+import server
+from cogwatch import watch
 from dotenv import load_dotenv
 from discord.ext import commands
 
@@ -16,37 +18,43 @@ bot = commands.Bot(command_prefix=commands.when_mentioned_or("pai ", "pai"),
 #.............................#
 cogs = [
     #----------- admin ---------------
-    'cogs.admin.admin',
     'cogs.admin.help',
     'cogs.admin.error',
-    'cogs.admin.listener',
+    'cogs.admin.premium',
+    'cogs.economy.economy',
 
     #---------- commands -------------
     'cogs.fortune',
-    'cogs.mafia',
-    'cogs.premium',
-    'cogs.miscellaneous',
-    'cogs.tor',
+    'cogs.roleplay',
+   
 
     #----------- economy --------------
-    'cogs.economy',
+
 ]
 
 for cog in cogs:
     try:
         bot.load_extension(cog)
-        print(cog + " was loaded.")
+        print(f"⋙  {cog}")
     except Exception as e:
-        print(e)
+        print(f"⊗  {cog} ")
 
+@bot.listen()
+async def on_ready():
+    server.srv()
+    print('----------------------------------\n')
+    print('Welcome back Master!')
+    print('Pai is now online! \n')
+    
+    await bot.change_presence(
+        activity = discord.Activity(type = discord.ActivityType.watching, name = 'you make mistakes...'))
 
-@bot.command(pass_context=True)
-async def reload(ctx,cog):
+@bot.command(pass_context=False)
+async def reload(cog):
     try:
-        await bot.reload_extension(f'{cog}')
+        await bot.reload_extension(cog)
 
     except Exception as e:
         print(f"\n {e}")
     
-
 bot.run(TOKEN)
