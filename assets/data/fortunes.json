@@ -1,0 +1,28 @@
+{
+	"Great": [
+		"Whenever you draw your blade, it shall lead you towards victory. The shine of your blade as it leaves its sheath will also inspire those around you. Today, a single shot from your bow will shoot down an airborne prey, and a single strike against a guard will hit their weak spot. If you have no target, try looking around. You might find a surprise waiting for you. Also, don't forget to share your good luck with your less-fortunate companions.",
+		"Today the wind will pick up, and you will succeed effortlessly in whatever you do. The people around you will be exceptionally content, and no conflicts will occur. You will dine on delicacies that you have wished for but not eaten in a long time. In your work and in your travels, everything will go smoothly. Seize the day and advance with zeal.",
+		"The clouds disperse, revealing the moon in the sky. Whoever draws this slip will receive great fortune. With clarity in your heart, what you wish for will come true. Things will go your way today, whether there is something you wish to accomplish... Or someone you wish to meet. Now is the time to act."
+	],
+
+	"Good" : [
+		"A day like any other. A routine that the body and mind are accustomed to. An item will appear to replace something you lost, which will bring you great happiness. Relations with the acquaintances you see most frequently will improve, and some may even become the best of friends. Even the most ordinary of days can become a treasured memory.",
+		"Spring has come to the withered tree, and many things are coming back to life. When things get difficult, the solution will come to you. When you are plagued by uncertainty, a helping hand will arrive. Clear your mind and tidy your home. You may find unexpected fortune.",
+		"A day when nothing especially noteworthy happens — and yet, you cannot help but feel happy. You will find something you thought was long gone in the nooks and crannies you never noticed before. Food will taste fresher than usual, and the scenery ahead will appear brighter than ever. The world is full of new and wonderful things."
+	],
+
+	"Modest" : [
+		"The air pressure is a little low, which makes you think back far into your past. Memories of your long-lost youth and friends with whom you have lost contact come to mind. They bring with them a touch of nostalgia, and a hint of sadness. It is good to remember the past once in a while. May it help calm your mind and face the future.",
+		"Clouds cover half the moon and the fog is thick. Above you is the moon shrouded by cloud. Ahead of you, everything is engulfed by fog. Though the way ahead seems unclear at the moment, all will become clear when the time comes. Take this opportunity to improve yourself while waiting for the clouds to clear.",
+		"A calm and serene day. Nothing will happen to make you sad. Today is a good day to catch up with friends you have not contacted in a long time, to reminisce and to laugh. When you eat, you will rediscover a flavor from the past that you tried once, long ago. Cherish the things and people in your life."
+	],
+
+	"Misfortune" : [
+		"Be careful. You may be about to lose something that you treasure. Remember to rest if you're feeling unwell. Think twice before you make a decision.",
+		"It seems like it will rain today. You may encounter an unpleasant situation. You will still be waiting for the commendation you are due, and you may be served the wrong dish by the waiting staff. Nothing terrible happens, but everything seems to irritate you. It's just one of those days."
+	],
+
+	"Great Misfortune" : [
+		"A day spent feeling empty inside can lead to a profound sense of powerlessness. The problems you face are defying your attempts to solve them. This futile endeavor is wearing you down and making you ill. But do not be discouraged that everything is going downhill. Survive this difficult period and one day you will achieve something great."
+	]
+}

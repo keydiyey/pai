@@ -1,0 +1,11 @@
+{
+    "currency" : {
+        "name" : "Yuan",
+        "Icon" : "🟡"
+    },
+
+    "reputation" : {
+        "name" : "Honor",
+        "icon" : "⚜"
+    }
+}

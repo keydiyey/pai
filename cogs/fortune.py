@@ -8,7 +8,7 @@ from discord.ext import commands
 
 def slip():
     try:
-        with open("data/fortune_slip.json", "r") as slip:
+        with open("assets/data/fortunes.json", "r") as slip:
             slips = json.load(slip)
         fortune = random.choice(("Great", "Good", "Modest", "Misfortune", "Great Misfortune"))
 

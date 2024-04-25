@@ -1,6 +1,6 @@
 import discord
 import cogs.admin.premium as premium
-import utils
+import utils.utils as utils
 import json
 
 class TempData:

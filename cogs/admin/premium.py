@@ -3,7 +3,7 @@ from discord.ext import commands
 from discord.ui import Button, View
 from aiohttp import ClientSession
 
-import utils
+import utils.utils as utils
 
 
 class A(Button):
