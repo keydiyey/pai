@@ -21,7 +21,7 @@ cogs = [
     'cogs.admin.help',
     'cogs.admin.error',
     'cogs.admin.premium',
-    'cogs.economy.economy',
+    'cogs.economy.bank',
 
     #---------- commands -------------
     'cogs.fortune',
@@ -37,7 +37,7 @@ for cog in cogs:
         bot.load_extension(cog)
         print(f"⋙  {cog}")
     except Exception as e:
-        print(f"⊗  {cog} ")
+        print(f"⊗  {cog} : {e}")
 
 @bot.listen()
 async def on_ready():
@@ -53,7 +53,6 @@ async def on_ready():
 async def reload(cog):
     try:
         await bot.reload_extension(cog)
-
     except Exception as e:
         print(f"\n {e}")
     

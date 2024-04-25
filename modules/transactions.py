@@ -1,4 +1,4 @@
-import data_management as dm
+import modules.data_management as dm
 
 
 def add_credits(user_id, amount):
@@ -18,3 +18,14 @@ def set_credits(user_id, amount):   	# ⚠ for admin only
 	data = dm.get(user_id)[amount]		# calls data[user_id] and attaches new credit
 	dm.update(data)						# updates json file
 
+
+# BANK TRANSACTIONS 
+def deposit(user_id, amount):
+	funds = dm.get_funds(user_id)
+	funds += amount
+	dm.update(funds)
+
+def withdraw(user_id, amount):
+	funds = dm.get_funds(user_id)
+	funds += amount
+	dm.update(funds)

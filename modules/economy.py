@@ -1,5 +1,4 @@
 import discord #upm package(py-cord)
-import data_management as pc
 from utils.utils import *
 from discord.ext import tasks, commands
 
@@ -12,7 +11,17 @@ from discord.ext import tasks, commands
 class Economy(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
-		
+	
+	@commands.command(name = "bank", description = "How much money you got.")
+	async def bank(self, ctx, user: discord.Member = None):
+		file = discord.File("./assets/images/bank.png", filename="image.png")
+		embed = discord.Embed(color = 0xf5e2e4)
+		embed.set_image(url="attachment://image.png" )
+		await ctx.reply(embed = embed, file = file)
+
+		profile = discord.Embed(title = "kj",description =  "yipeeee", color = 0xf5e2e4)
+		await ctx.send(embed = profile)
+
 
 	#----------Commands---------	
 	@commands.command(name = "profile", description = "How much money you got.")
