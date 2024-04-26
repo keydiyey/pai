@@ -4,7 +4,7 @@ import discord
 from discord.ext import tasks, commands
 
 import modules.transactions as transaction
-
+from modules.errors import bank_error
 
 name = { "en":"Momiji Bank", "jp":"紅葉銀行"}
 
@@ -12,21 +12,27 @@ name = { "en":"Momiji Bank", "jp":"紅葉銀行"}
 class amount_modal(discord.ui.View):
 	def __init__(self, *args, **kwargs) -> None:
 		super().__init__(*args, **kwargs)
-		self.add_item(discord.ui.InputText(label="Short Input"))
+		self.add_item(discord.ui.InputText(label="How much?"))
 
 	async def callback(self, interaction: discord.Interaction):
 		amount = self.children[0].value
 		return await amount
 
 
-class bank_buttons(discord.ui.View): # Create a class called MyView that subclasses discord.ui.View
+class bank_buttons(discord.ui.View): 
 	@discord.ui.button(label="Deposit", style=discord.ButtonStyle.success, emoji="➕") 
 	async def deposit_callback(self, button, interaction):
 		user = interaction.user
 		modal = amount_modal(title="Modal via Slash Command")
-		amount = await interaction.send_modal(modal)
-		transaction.deposit(user.id, amount)
-		await interaction.response.send_modal(amount_modal(title="Modal via Button"))
+		
+		try:
+			amount = await interaction.send_modal(modal) # Asks how much
+		except:
+			return await interaction.response.edit_message(embed = bank_error()) # Error handling
+
+		transaction.deposit(user.id, amount)    # runs transaction
+		
+		return await interaction.response.edit_message("You clicked the withdraw!")
 	
 	@discord.ui.button(label="Withdraw", style=discord.ButtonStyle.success, emoji="➖") 
 	async def withdraw_callback(self, button, interaction):
@@ -47,12 +53,13 @@ class Bank(commands.Cog):
 
 		embed = discord.Embed(title="🍁 Momiji Northland Bank", description=description)
 
-		file = discord.File("./assets/images/bank.png", filename="image.png")
-		embed.set_image(url="attachment://image.png")
+	
+		embed.set_image(url="https://drive.google.com/file/d/1sGDhjpLgBKoW89Bt7HS37ZPzB2A6RidQ/view?usp=drive_link")
 
+		if "subtitle" not in record or record["subtitle"] != "French":
+			add_french_subtitles(record) # or whatever
 
-
-		await ctx.respond(embed = embed, file=file, view=bank_buttons())
+		await ctx.respond(embed = embed, view=bank_buttons())
 
 
 	

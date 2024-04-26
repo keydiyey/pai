@@ -1,20 +1,22 @@
 import discord
-from data_management import load_users
+from modules.data_management import load_users
+from modules.errors import bank
 
+def has_account(func):
+    """Validates acount registration in Momiji Northland Bank"""
+    def inner(user_id):
 
-async def has_permissions(ctx, permissions):
-    """Checks if the author of the message has the specified permissions."""
-    return all(perm in ctx.author.permissions for perm in permissions)
+        if str(user_id) in load_users():
+            # call original function
+            func()
+        else:
+            return bank.transaction_error()
+    return inner  #return the inner function
 
-async def is_in_guild(ctx):
-    """Checks if the command was invoked in a guild."""
-    return ctx.guild is not None
-
-async def is_admin(ctx):
-    """Checks if the author of the message has the administrator permission."""
-    return await has_permissions(ctx, (discord.Permissions.administrator,))
-
+# define ordinary function
+def ordinary():
+    print("I am ordinary")
 
 async def has_account(user_id):
-    """Validates acount registration in Momiji Northland Bank"""
-    return await str(user_id) in load_users()
+    
+    return await 
