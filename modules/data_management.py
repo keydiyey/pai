@@ -18,12 +18,10 @@ def update(new_data):
 		json.dump(new_data, u, indent=4)
 
 
-
-
 #-------------------------- Fetch Data Requests
 def get(UID, data, type=None):
-	if not(isinstance(UID, int)):
-			UID = int(UID)
+	if not(isinstance(UID, str)):
+		UID = str(UID)
 
 	if type == None:
 		output = data[0][UID]
@@ -39,25 +37,27 @@ def get_credits(user_id):
 #--------------------------- Register new users in Bank
 
 def register(UID):
+	if not(isinstance(UID, str)):
+		UID = str(UID)
+
 	users = load()
+
 	print(users)
+
 	users[UID] = {}
 	users[UID]["credits"] = 1000
-	users[UID]["funds"] = 0
+	users[UID]["funds"] = 1000
 	users[UID]["reputation"] = 0
 	users[UID]["deaths"] = 0
 	users[UID]["jailtime"] = 0
 	users[UID]["funds"] = 0
 
+
+
 	update(users)
 
 	
 
-
-
-
-
-register(11111)
 
 
 

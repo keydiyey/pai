@@ -1,3 +1,9 @@
 {
-
+    "555": {
+        "credits": 1000,
+        "funds": 0,
+        "reputation": 0,
+        "deaths": 0,
+        "jailtime": 0
+    }
 }
