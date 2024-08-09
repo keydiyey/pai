@@ -13,11 +13,21 @@ class Roleplay(commands.Cog):
     def getURL(self, url):
         r = requests.get(url)
         actions = json.loads(r.content)
+
         action = actions["url"]
         return action
         
     async def rpEmbed(self, ctx, user, action, fullAction, member):
         gif = self.getURL(f"https://api.otakugifs.xyz/gif?reaction={action}")
+        embed = discord.Embed(description = f"✨ **{user.display_name}** {fullAction} **{member.display_name}** ✨", color = discord.Colour.random())
+        embed.set_image(url = gif) 
+        return await ctx.send(embed = embed)
+
+    @commands.command()
+    async def stone(self, ctx, member: discord.Member = None):
+        user = ctx.author
+        fullAction = "has stoned"
+        gif = "https://media.tenor.com/-ch_P-w9vbwAAAAi/haram-throw-rock.gif"
         embed = discord.Embed(description = f"✨ **{user.display_name}** {fullAction} **{member.display_name}** ✨", color = discord.Colour.random())
         embed.set_image(url = gif) 
         return await ctx.send(embed = embed)    

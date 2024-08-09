@@ -1,7 +1,7 @@
 import discord
 
 
-class bank:
+class BankErrors:
 
   async def transaction_error(ctx):
 

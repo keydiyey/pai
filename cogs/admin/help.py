@@ -1,8 +1,5 @@
 import discord #upm package(py-cord)
 from discord.ext import commands
-from discord.commands import SlashCommandGroup
-
-import ui
 
 
 
@@ -13,9 +10,17 @@ class Help(commands.Cog):
 	@commands.slash_command(name = "help", description = "Get some help.")
 	async def help(self, ctx:discord.ApplicationContext):
 		'''ephemeral = true'''
-		description = "idk"
-		embed = discord.Embed(description = description, color = 0xff8c69)
-		embed.set_author(name = "Pai Commands", icon_url = str(self.bot.user.avatar.url))
+		embed = discord.Embed(color = 0xff8c69)
+		embed.set_author(name = "Pai Commands List", icon_url = str(self.bot.user.avatar.url))
+		embed.add_field(name="/Bank 🏦",
+                value="Check profile or send money to another member.",
+                inline=True)
+		embed.add_field(name="/Fortune 🧧",
+						value="Check your luck today!",
+						inline=True)
+		embed.add_field(name="/Rob 🦹‍♀️",
+						value="Commit tomfoolery.",
+						inline=True)
 		return await ctx.respond(embed=embed, ephemeral = True)
 
 	@commands.slash_command(name = "changelog", description = "What's New?")

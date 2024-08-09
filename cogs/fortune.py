@@ -33,7 +33,8 @@ class SlipButton(Button):
 
             embed2 = discord.Embed(title = title, description = desc, color = 0xf5e2e4)
             embed2.set_thumbnail(url = "https://static.wikia.nocookie.net/gensin-impact/images/b/b0/Item_Fortune_Slip_Opened.png/revision/latest/scale-to-width-down/256?cb=20210725221204")
-            await interaction.reply.edit_message(embed = embed2, view = None)
+            await interaction.response.defer()
+            await interaction.edit_original_response(embed = embed2, view = None)
     except Exception as e:
         print(e)
 

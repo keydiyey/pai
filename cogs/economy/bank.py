@@ -3,69 +3,70 @@
 import discord 
 from discord.ext import tasks, commands
 
-import modules.transactions as transaction
-from modules.errors import bank_error
+import utils.transactions as transaction
+from cogs.economy.bank_errors import BankErrors as bank_error
+import utils.database as database
 
 name = { "en":"Momiji Bank", "jp":"紅葉銀行"}
 
+def bank_embed(description):
+	embed = discord.Embed(title="🍁 Momiji Northland Bank", description = description)
+	embed.set_image(url="https://i.imgur.com/ajCEmdh.png?1")
 
-class amount_modal(discord.ui.View):
-	def __init__(self, *args, **kwargs) -> None:
-		super().__init__(*args, **kwargs)
-		self.add_item(discord.ui.InputText(label="How much?"))
-
-	async def callback(self, interaction: discord.Interaction):
-		amount = self.children[0].value
-		return await amount
+	return embed
 
 
-class bank_buttons(discord.ui.View): 
-	@discord.ui.button(label="Deposit", style=discord.ButtonStyle.success, emoji="➕") 
-	async def deposit_callback(self, button, interaction):
+
+class bank_buttons(discord.ui.View):
+
+	# Checking User Profile
+	@discord.ui.button(label="Profile", style=discord.ButtonStyle.blurple, emoji="👤") 
+	async def profile_callback(self, button, interaction):
 		user = interaction.user
-		modal = amount_modal(title="Modal via Slash Command")
+		UID = user.id
+
+		desc = f'''**Credits** {database.get_credits(UID)} ◉ 
+				\n**Reputation**  {database.get_reputation(UID)} 
+				\n\n **Deaths**  {database.get_deaths(UID)} 
+				\n **Jailtime** {database.get_jailtime(UID)} '''
+		profile = discord.Embed(description =  desc, color = 0xf5e2e4)
+		profile.set_thumbnail(url = "https://static.wikia.nocookie.net/gokurakugai/images/3/37/Gokurakugai_Troubleshooter_Agency_Logo.png/revision/latest/scale-to-width/360?cb=20221023100708")
+		profile.set_author(name = user.display_name, icon_url = user.display_avatar.url)
+
+		await interaction.response.defer() #need to defer before changing for some reason
+
+		return await interaction.edit_original_response(embed = profile, view = None)
+
+	@discord.ui.button(label="Send Credits", style=discord.ButtonStyle.blurple, emoji="⬆") 
+	async def transfer_callback(self, button, interaction, member, amount):
+			user = interaction.user
+			transaction.transfer_credits(user.id, member.id, amount)
 		
-		try:
-			amount = await interaction.send_modal(modal) # Asks how much
-		except:
-			return await interaction.response.edit_message(embed = bank_error()) # Error handling
-
-		transaction.deposit(user.id, amount)    # runs transaction
-		
-		return await interaction.response.edit_message("You clicked the withdraw!")
-	
-	@discord.ui.button(label="Withdraw", style=discord.ButtonStyle.success, emoji="➖") 
-	async def withdraw_callback(self, button, interaction):
-
-		user = interaction.user
-		transaction.withdraw(user.id)
-		await interaction.response.send_message("You clicked the withdraw!") 
-		
-
-
 class Bank(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
 
 	@commands.slash_command(name = "bank", description= "🍁 紅葉銀行 | Momiji Northland Bank")
 	async def bank(self, ctx):
-		description = '''Welcome to Momiji Northland Bank! We're happy to assist you with your finances. Today, would you like to make a deposit or withdraw some credits? With a deposit, you can add funds to your account. If you're looking to take out some credits, a withdrawal can be made to use for whatever you need.'''
-
-		embed = discord.Embed(title="🍁 Momiji Northland Bank", description=description)
-
-	
-		embed.set_image(url="https://drive.google.com/file/d/1sGDhjpLgBKoW89Bt7HS37ZPzB2A6RidQ/view?usp=drive_link")
-
-		if "subtitle" not in record or record["subtitle"] != "French":
-			add_french_subtitles(record) # or whatever
-
-		await ctx.respond(embed = embed, view=bank_buttons())
-
-
-	
+		data = database.load()
 		
-	  
+		if str(ctx.author.id) in data:
+			description = '''Welcome to Momiji Northland Bank! We're happy to assist you with your finances. Today, would you like to take a look at your profile or send some credits to another member?'''
+			embed = bank_embed(description)
 
+			await ctx.respond(embed = embed, view = bank_buttons())			
 
+		else:	
+			database.register(ctx.author.id)
+			description = '''It seems like you do not have an account. You have been automatically registered to the system.'''
+			embed= bank_embed(description)
+			await ctx.respond( embed = embed, view = bank_buttons())
 def setup(bot):
 	bot.add_cog(Bank(bot))
+
+
+
+
+
+
+

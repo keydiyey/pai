@@ -17,21 +17,40 @@ def update(new_data):
 	with open(USERS_PATH, "w") as u:
 		json.dump(new_data, u, indent=4)
 
+#----------------------------- Check if exists
+
+def is_existing(UID):
+	data = load()
+	if str(UID) in data:
+		return True    
+	else:
+		return False
+
 
 #-------------------------- Fetch Data Requests
-def get(UID, data, type=None):
+def get(UID, type=None):
+	data = load()
+
 	if not(isinstance(UID, str)):
 		UID = str(UID)
-
 	if type == None:
-		output = data[0][UID]
+		output = data[UID]
 	else:
-		output = data[0][UID]
+		output = data[UID][type]
 	return output
 
 def get_credits(user_id):
-	data = load()
-	get(user_id, data, "credits")
+	return get(user_id, "credits")
+
+def get_reputation(user_id):
+	return get(user_id, "reputation")
+
+def get_deaths(user_id):
+	return get(user_id, "deaths")
+
+def get_jailtime(user_id):
+	return get(user_id, "jailtime")
+
 
 
 #--------------------------- Register new users in Bank
@@ -42,15 +61,11 @@ def register(UID):
 
 	users = load()
 
-	print(users)
-
 	users[UID] = {}
-	users[UID]["credits"] = 1000
-	users[UID]["funds"] = 1000
+	users[UID]["credits"] = 5000
 	users[UID]["reputation"] = 0
 	users[UID]["deaths"] = 0
 	users[UID]["jailtime"] = 0
-	users[UID]["funds"] = 0
 
 
 

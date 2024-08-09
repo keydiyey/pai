@@ -1,7 +1,6 @@
 import os
 import discord
 import server
-from cogwatch import watch
 from dotenv import load_dotenv
 from discord.ext import commands
 
@@ -28,7 +27,8 @@ cogs = [
     'cogs.roleplay',
    
 
-    #----------- economy --------------
+    #-----------  --------------
+    'cogs.crimes'
 
 ]
 
@@ -46,8 +46,9 @@ async def on_ready():
     print('Welcome back Master!')
     print('Pai is now online! \n')
     
-    await bot.change_presence(
-        activity = discord.Activity(type = discord.ActivityType.watching, name = 'you make mistakes...'))
+    await bot.change_presence(status=discord.Status.idle,
+                              activity = discord.Activity(type = discord.ActivityType.watching,
+                                                           name = 'you make mistakes...'))
 
 @bot.command(pass_context=False)
 async def reload(cog):

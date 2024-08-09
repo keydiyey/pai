@@ -3,11 +3,27 @@ from discord.ext import commands
 from discord.ui import Button, View
 from aiohttp import ClientSession
 
-import utils.utils as utils
 
+class ShopButtons(discord.ui.View):
+    @discord.ui.button(label="A", style=discord.ButtonStyle.primary, emoji="🅰") 
+    async def name_callback(self, button, interaction):
+        '''
+        Changes the name of the server
+        '''
+        user = interaction.user
+        guild = interaction.guild
+        client = interaction.client
+        message = interaction.message
+       
+        
+        embed = discord.Embed(title = "Premium Shop", description =  f"Please type the new name for the server!", color = 0xf5e2e4)
 
-class A(Button):
-    async def callback(self, interaction):
+        await interaction.message.edit(embed = embed, view = None, file = None)
+
+        server_name = await self.client.wait_for("message", check=lambda message: message.author == self.user)
+    
+    @discord.ui.button(label="B", style=discord.ButtonStyle.primary, emoji="🅱") 
+    async def icon_callback(self, button, interaction):
         self.user = interaction.user
         self.guild = interaction.guild
         self.client = interaction.client
@@ -15,15 +31,17 @@ class A(Button):
        
         
         embed = discord.Embed(title = "Premium Shop", description =  f"Please type the new name for the server!", color = 0xf5e2e4)
+
         await interaction.message.edit(embed = embed, view = None, file = None)
+
         server_name = await self.client.wait_for("message", check=lambda message: message.author == self.user)
-        print(server_name)
+
         
 
 class Premium(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.image = utils.image("\cogs\img\cart.png")
+        #self.image = utils.image("\cogs\img\cart.png")
         
 
     @commands.command(name = "shop", description = "Premium Server Commands.")
@@ -32,21 +50,16 @@ class Premium(commands.Cog):
         embed = discord.Embed(title = "Premium Shop", color = 0xff8c69)
         
         goods = {"A | Change Server Name" : "```5000 ◉```",
-                "B | Change Server Icon" : "```10000 ◉```",
-                "C | Add/Replace Emote" : "```500 ◉```",
-                "D | Add/Replace Soundboard": "```500 ◉```"}
+                "B | Change Server Icon" : "```10000 ◉```"}
         
         for good, price in goods.items():
             embed.add_field(name=good, value = price, inline = False)
         
-        embed.set_thumbnail(url='attachment://image.png')
+        embed.set_thumbnail(url='https://cdn3d.iconscout.com/3d/premium/thumb/cart-5590713-4652405.png?f=webp')
         
-        a = A(label = "A", style = discord.ButtonStyle.green)
+        view = ShopButtons()
         
-        view = View()
-        view.add_item(a)
-        
-        return await ctx.reply(file = self.image.file, embed = embed, view  = view())
+        return await ctx.reply(embed = embed, view  = view())
       
 
         

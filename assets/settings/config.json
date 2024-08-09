@@ -1,0 +1,28 @@
+{
+    "currency" : {
+        "name" : "Yuan",
+        "Icon" : "🟡"
+    },
+
+    "reputation" : {
+        "name" : "Honor",
+        "icon" : "⚜"
+    },
+
+    "probability" : {
+        "jail" : "Honor",
+        "murder" : "⚜"
+    },
+
+    "permissions" : {
+        "civilian" : {
+            "murder" : true,
+            "rob" : true
+        },
+
+        "inmate" : {
+            "murder" : true,
+            "rob" : true
+        }
+    }
+}

@@ -1,6 +1,6 @@
 import discord
-from modules.data_management import load_users
-from modules.errors import bank
+from utils.database import load_users
+from cogs.economy.bank_errors import bank
 
 def has_account(func):
     """Validates acount registration in Momiji Northland Bank"""
@@ -17,6 +17,4 @@ def has_account(func):
 def ordinary():
     print("I am ordinary")
 
-async def has_account(user_id):
-    
-    return await 
+
