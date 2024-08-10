@@ -39,10 +39,17 @@ for cog in cogs:
     except Exception as e:
         print(f"⊗  {cog} : {e}")
 
+@bot.event
+async def on_connect():
+    if bot.auto_sync_commands:
+        await bot.sync_commands()
+        print('----------------------------------\n')
+        print(f"{bot.user.name}'s commands synced!\n")
+
 @bot.listen()
 async def on_ready():
     server.srv()
-    print('----------------------------------\n')
+
     print('Welcome back Master!')
     print('Pai is now online! \n')
     

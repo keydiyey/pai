@@ -30,9 +30,7 @@ def is_existing(UID):
 #-------------------------- Fetch Data Requests
 def get(UID, type=None):
 	data = load()
-
-	if not(isinstance(UID, str)):
-		UID = str(UID)
+	UID = str(UID)
 	if type == None:
 		output = data[UID]
 	else:

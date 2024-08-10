@@ -47,7 +47,7 @@ class Bank(commands.Cog):
 		self.bot = bot
 
 	@commands.slash_command(name = "bank", description= "🍁 紅葉銀行 | Momiji Northland Bank")
-	async def bank(self, ctx):
+	async def bank(self, ctx:discord.ApplicationContext):
 		data = database.load()
 		
 		if str(ctx.author.id) in data:
@@ -61,6 +61,7 @@ class Bank(commands.Cog):
 			description = '''It seems like you do not have an account. You have been automatically registered to the system.'''
 			embed= bank_embed(description)
 			await ctx.respond( embed = embed, view = bank_buttons())
+			
 def setup(bot):
 	bot.add_cog(Bank(bot))
 

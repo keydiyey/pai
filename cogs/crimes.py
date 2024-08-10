@@ -1,5 +1,6 @@
 
 import discord 
+from discord import option
 from discord.ext import tasks, commands
 import utils.transactions as transactions
 from random import randint
@@ -20,7 +21,9 @@ class Crimes(commands.Cog):
 	
 	@commands.cooldown(1, 30, commands.BucketType.user)
 	@commands.slash_command(name = "rob", description = "rob another member!")
-	async def rob(self, guild, ctx, member: discord.Member = None):
+	@option("member", description="Enter someone's name", required=True)
+	async def rob(self, ctx:discord.ApplicationContext, member: discord.Member):
+		guild = ctx.guild
 		user = ctx.author
 		user_id = user.id
 		member_id = member.id
@@ -30,7 +33,7 @@ class Crimes(commands.Cog):
 
 		if randint(0,100) <= prob_rob: #percent success
 			# transfering credits
-			transactions.transfer_credits(user_id, member_id, permax= randint(0.1,1))
+			transactions.transfer_credits(member_id, user_id, permax = randint(0.1,1))
 			description = f"💰 | Successfully robbed {member.nick}!"
 		else:
 			description = f" ❌ | You failed to rob {member.nick}"

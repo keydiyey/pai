@@ -45,7 +45,7 @@ class Fortune(commands.Cog):
 
     @commands.slash_command(name = "fortune", description = "Check your luck today!")
     @commands.cooldown(1, 60*60*24, commands.BucketType.user)
-    async def fortune(self, ctx):
+    async def fortune(self, ctx:discord.ApplicationContext):
         try:
             title = "Fortune Slip Box"
             text = f"There's a chance every day to receive a fortune slip…\nThe procedure is as follows: shake a bamboo slip from Fortune Slip Box, and exchange that bamboo slip for a Fortune Slip with Pai.\nWould you like to try your luck today?"

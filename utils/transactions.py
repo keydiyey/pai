@@ -15,6 +15,7 @@ def deduct_credits(UID, amount = None):
 @wrappers.check_transfer_credits
 def transfer_credits(giver_id, receiver_id, amount = None, permax = None):
 	if permax != None:
+		credits = dm.get_credits(giver_id)
 		amount = credits * permax	
 	deduct_credits(giver_id, amount)
 	add_credits(receiver_id, amount)

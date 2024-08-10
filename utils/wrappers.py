@@ -12,9 +12,9 @@ def check_if_exists(func):
 			func(**kwargs)
 
 def check_transfer_credits(func):
-	def inner(giver_id, receiver_id, amount = None):
+	def inner(giver_id, receiver_id, amount = None, permax = None):
 		if amount <= database.get_credits(giver_id):
-			func(giver_id=giver_id, receiver_id=receiver_id, amount = amount)
+			func(giver_id=giver_id, receiver_id=receiver_id, amount = amount, permax = permax)
 	return inner
 
 
