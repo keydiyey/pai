@@ -14,9 +14,8 @@ class Role:
 		self.is_imprisonable = is_imprisonable
 
 	async def penalty(self, user, timeout):
-		await user.add_roles(self.role)
 
-		
+		await user.add_roles(self.role)
 
 		# waiting for timeout
 		await asyncio.sleep(timeout)

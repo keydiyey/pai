@@ -5,7 +5,6 @@ import requests
 import json
 
 from datetime import datetime, timedelta
-from responses import responses
 
 from discord.ext import commands
 
@@ -43,7 +42,7 @@ class Miscellaneous(commands.Cog):
 
 		await ctx.send(embed=embed)
 
-
+	'''
 	@commands.command(aliases=["?"])
 	async def CallPai(self, ctx):
 		user = ctx.author
@@ -51,7 +50,8 @@ class Miscellaneous(commands.Cog):
 			await ctx.send(responses.paiRes(user))
 		except Exception as e:
 			print(f"\n{e}")
-
+	'''
+	
 	@commands.slash_command(name = "ppmeter", description = "pp how long?", guild_ids = [803432151097147444])
 	async def ppmeter(self, ctx, user : discord.Member):
 		p = random.randint(0,15)
@@ -91,10 +91,8 @@ class Miscellaneous(commands.Cog):
 		elif p == 100:
 			emoji = " **Soulmates** 💖"			
 
-		if user == None:
+		if user == None or user == self.bot:
 			description = f"**You and I are {p} % compatible**. {emoji}"
-		elif user == self.bot:
-			description = f"**You and I are {p} % compatible.** {emoji}"
 		elif user == ctx.author and member == None:
 			description = "**How sad...** 😟"
 		elif user == ctx.author and member == ctx.author:
@@ -142,6 +140,7 @@ class Miscellaneous(commands.Cog):
 			await asyncio.sleep(random.randint(3,5))
 			await ctx.send(ans)
 
+	'''
 	@commands.cooldown(1, 5, commands.BucketType.user)
 	@commands.command(name = "8b")
 	async def eightball(self, ctx, *, arg):
@@ -167,6 +166,7 @@ class Miscellaneous(commands.Cog):
 		await asyncio.sleep(random.randint(1,3))
 
 		await msg.edit(content = f"🎱 | {message}")
+	'''
 
 	@commands.command()
 	async def inspireme(self, ctx):

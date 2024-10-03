@@ -20,7 +20,9 @@ cogs = [
     'cogs.admin.help',
     'cogs.admin.error',
     'cogs.admin.premium',
-    'cogs.economy.bank',
+    "cogs.miscellaneous",
+    'cogs.admin.listener',
+    #'cogs.economy.bank',
 
     #---------- commands -------------
     'cogs.fortune',
@@ -28,7 +30,7 @@ cogs = [
    
 
     #-----------  --------------
-    'cogs.crimes'
+    #'cogs.crimes'
 
 ]
 

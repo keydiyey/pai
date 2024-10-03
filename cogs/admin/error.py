@@ -9,8 +9,11 @@ class Error(commands.Cog):
 		
 		self.bot = bot
 
+	
+
 	@commands.Cog.listener()
-	async def on_command_error(self, ctx, error):
+	async def on_application_command_error(self, ctx, error):
+
 		if isinstance(error, commands.CommandNotFound):
 			pass
 
@@ -23,6 +26,7 @@ class Error(commands.Cog):
 			await ctx.respond(embed=embed, ephemeral=True)
 			
 		elif isinstance(error, commands.CommandOnCooldown):
+
 			cd = int(error.retry_after)
    
 			if 60 * 60 < cd :
@@ -35,7 +39,7 @@ class Error(commands.Cog):
 				time = str(round(cd)) + " second(s)."
 
 			embed = discord.Embed(description = f"Wait {ctx.author.name}! This command is on cooldown. Please wait {time}", color = discord.Color.red())
-			await ctx.send(embed=embed, ephemeral=True)
+			await ctx.respond(embed=embed, ephemeral=True)
 		else:
 			print(error)
 
