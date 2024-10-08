@@ -18,9 +18,16 @@ def check_transfer_credits(func):
 	return inner
 
 
-
-
 def check_probability(func):
+	def inner(probability, *args, **kwargs):
+		if randint(0,100) <= probability: #percent success
+			func(*args, **kwargs)
+		else:
+			return False
+	return inner
+
+
+def check_roles(func):
 	def inner(probability, *args, **kwargs):
 		if randint(0,100) <= probability: #percent success
 			func(*args, **kwargs)

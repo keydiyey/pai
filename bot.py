@@ -20,7 +20,7 @@ cogs = [
     'cogs.admin.help',
     'cogs.admin.error',
     'cogs.admin.premium',
-    "cogs.miscellaneous",
+    'cogs.miscellaneous',
     'cogs.admin.listener',
     #'cogs.economy.bank',
 
@@ -30,7 +30,7 @@ cogs = [
    
 
     #-----------  --------------
-    #'cogs.crimes'
+    'cogs.crimes'
 
 ]
 
@@ -47,6 +47,7 @@ async def on_connect():
         await bot.sync_commands()
         print('----------------------------------\n')
         print(f"{bot.user.name}'s commands synced!\n")
+        
 
 @bot.listen()
 async def on_ready():
@@ -54,6 +55,8 @@ async def on_ready():
 
     print('Welcome back Master!')
     print('Pai is now online! \n')
+    #print ("Guild : ", bot.guilds)
+
     
     await bot.change_presence(status=discord.Status.idle,
                               activity = discord.Activity(type = discord.ActivityType.watching,
@@ -65,5 +68,14 @@ async def reload(cog):
         await bot.reload_extension(cog)
     except Exception as e:
         print(f"\n {e}")
+
+"""@bot.command()
+async def leave(ctx, guild_id:int):
+    guild=discord.utils.get(bot.guilds, id=guild_id)
+    if guild==None:
+        await ctx.send("Server not found by ID")
+        return
+    await guild.leave()
+    await ctx.send(f"Left {guild.name}!")"""
     
 bot.run(TOKEN)

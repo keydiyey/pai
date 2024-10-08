@@ -2,7 +2,7 @@ import discord #upm package(py-cord)
 import asyncio
 
 from random import randint
-from discord.ext import tasks, commands
+from discord.ext import commands
 
 class Listeners(commands.Cog):
 	def __init__(self, bot):
@@ -28,16 +28,18 @@ class Listeners(commands.Cog):
 		
 	@commands.Cog.listener()
 	async def on_message(self,message: discord.Message):
+		if len(message.split())
 		member = message.author
 		timeout = randint(20,120)
 
 		inmate = discord.utils.get(member.guild.roles, name = "Inmate")
 		deceased = discord.utils.get(member.guild.roles, name = "Deceased")
 
-		chance = 0.025	
+		chance = 6	
 		kill_list = ["crush",
 			   		"ass",
 					"backshots",
+					"bottom",
 					"yearn",
 					"hihi",
 					"touch",
@@ -47,7 +49,8 @@ class Listeners(commands.Cog):
 					"bark",
 					"basement",
 					"greatest",
-					"symphony"] 
+					"symphony",
+					"yearn"] 
 
 		
 		 # Make sure we won't be replying to ourselves.
@@ -62,7 +65,7 @@ class Listeners(commands.Cog):
 				return await message.reply(embed = embed, ephemeral = True)
 
 			# ① Gacha time for victim
-			if randint(0,1) <= chance: #percent success
+			if randint(0,100) <= chance: #percent success
 
 				timeout = randint(20,120)
 				description = f" **{member.display_name} has been assassinated for speaking the truth! `{timeout} sec`**"

@@ -7,7 +7,7 @@ USERS_PATH = "./assets/data/users.json"
 #------------------------- Loading Data
 def load():
 	try:
-		with open(USERS_PATH) as u:
+		with open(USERS_PATH, "r", encoding="utf-8") as u:
 			return json.load(u)
 	except FileNotFoundError:
 		return print("Error: File not found.")

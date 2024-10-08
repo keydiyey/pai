@@ -1,0 +1,5 @@
+asyncio
+py-cord
+json
+requests
+random
