@@ -9,7 +9,7 @@ print(date)
 
 data = database.load()
 
-
+UID = "543806339785162764"
 marriage_data = data[UID]['marriage'] 
 
 marriage_data |=  {"x" : "07 - 31 - 1999"} 

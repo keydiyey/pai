@@ -42,7 +42,7 @@ def register(UID):
 
 	users[UID] = {}
 	users[UID]["credits"] = 5000
-	users[UID]["reputation"] = 0
+	users[UID]["divorce"] = 0
 	users[UID]["deaths"] = 0
 	users[UID]["jailtime"] = 0
 

@@ -24,7 +24,7 @@ class User:
 	def __init__(self, uid):
 		#print("@init")
 		self.credits = get(uid, "credits")
-		self.reputation = get(uid, "reputation")
+		self.divorce = get(uid, "divorce")
 		self.jailtime = get(uid, "jailtime")
 		self.deaths = get(uid, "deaths")
 		self.marriage = get(uid, "marriage")

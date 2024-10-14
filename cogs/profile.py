@@ -19,7 +19,7 @@ class User(commands.Cog):
 		embed = discord.Embed(title= user.display_name, color = 0xf5e2e4)
 
 		embed.add_field(name="Credits", value= data.credits, inline=True)
-		embed.add_field(name="Reputation", value=data.reputation, inline=True)
+		embed.add_field(name="Divorce Counter", value=data.divorce, inline=True)
 		embed.add_field(name="", value="", inline=False) # placeholder
 
 		embed.add_field(name="Jail time", value= data.jailtime, inline=True)
@@ -30,15 +30,16 @@ class User(commands.Cog):
 
 		for key, value in data.marriage.items():
 
-			name = ctx.guild.get_member(UID)
+			wife = ctx.guild.get_member(int(key))
 
-			text += f"{name}  💍 <t:{value}:R> \n" 
+			text += f"{wife.display_name}  💍 <t:{value}:R> \n" 
 			
 		embed.add_field(name="Marital Status", value=text, inline=False)
 
 		embed.set_image(url= data.banner)
 
 		embed.set_thumbnail(url = user.display_avatar.url)
+		embed.set_footer(text=f"ID : {UID}")
 
 		return await ctx.respond(embed = embed, view = None)
 	

@@ -14,8 +14,10 @@ import utils.database as db
 
 
 async def add(UID, MID):
+	UID =str(UID)
+	MID = str(MID)
 	data = db.load()
-	date = datetime.now().timestamp()
+	date = round(datetime.now().timestamp())
 
 	marriage_data = data[UID]['marriage'] 
 
@@ -24,6 +26,7 @@ async def add(UID, MID):
 	return db.update(data)
 
 async def delete(UID):
+	UID =str(UID)
 	data = db.load()
 
 	marriage_data = data[UID]['marriage'] 
@@ -34,11 +37,39 @@ async def delete(UID):
 
 
 class marriage_buttons(discord.ui.View):
+	def __init__(self, *items, timeout = 180, disable_on_timeout = False, bot, user, member):
+		super().__init__(*items, timeout=timeout, disable_on_timeout=disable_on_timeout)
+		self.bot = bot
+		self.user = user
+		self.member = member
+
+	async def interaction_check(self, interaction: discord.Interaction):
+		return self.member.id == interaction.user.id
 
 	# Checking User Profile
 	@discord.ui.button(label="Yes", style=discord.ButtonStyle.green, emoji="✅") 
 	async def accept_callback(self, button, interaction):
-		return True
+		# interaction.user should be member
+		try:
+			
+			await add(self.user.id, self.member.id)
+			await add(self.member.id, self.user.id)
+
+			title = "Congratulations on being married!"
+
+			url = "https://64.media.tumblr.com/7f3f0b5602d99cd40a4488c5ec88c687/9470f7fcbd4ac983-dc/s540x810/48777ed15657c50efe8d10436922e5315d21a0f8.gif"
+
+			embed = discord.Embed(title=title, color = 0xf5e2e4)
+			embed.set_image(url=url)
+
+			await interaction.response.defer() # do not delete future kj need to defer before editing embed for some reason 
+
+			return await interaction.edit_original_response(embed = embed, view = None)
+			
+		except Exception as e:
+			print(e)
+
+		
 
 	@discord.ui.button(label="No", style=discord.ButtonStyle.red, emoji="❎") 
 	async def reject_callback(self, button, interaction, member, amount):
@@ -55,30 +86,13 @@ class Marriage(commands.Cog):
 	async def marry(self, ctx:discord.ApplicationContext, member: discord.Member):
 		user = ctx.user
 		embed = discord.Embed(title=f"{user.display_name} has proposed to {member.display_name}!",
-						description="Do you take this woman to be your wife, to live together in (holy) matrimony, to love her, to honor her, to comfort her, and to keep her in sickness and in health, forsaking all others, for as long as you both shall live?")
+						description="Do you take this woman to be your wife, to live together in (holy) matrimony, to love her, to honor her, to comfort her, and to keep her in sickness and in health, forsaking all others, for as long as you both shall live?",
+						color = 0xf5e2e4)
+		embed.set_thumbnail(url="https://pbs.twimg.com/media/GFn9BZVawAAP_eJ.png")
 		
-		decision = ctx.respond(embed = embed, view = marriage_buttons(timeout=60))
+		return await ctx.respond(embed = embed, view = marriage_buttons(timeout=60, bot=self.bot, user=user, member=member))
 
-		try:
-			if decision == True:
-				await add(user.id, member.id)
-				await add(member.id, user.id)
-				url = "https://64.media.tumblr.com/7f3f0b5602d99cd40a4488c5ec88c687/9470f7fcbd4ac983-dc/s540x810/48777ed15657c50efe8d10436922e5315d21a0f8.gif"
-				title = "Congratulations on being married!"
-
-			else:
-				url = "https://animesher.com/entry/pastel-colors-anime-gif-spirited-away-2031329/"
-				embed = discord.Embed(description=f"You or target member is already dead or in jail. Please try again later.", color=0xffd9cc)
-				title = f"{member.display_name} has rejected {user.display_name}'s proposal!"
-
-		except Exception as e:
-			print(e)
 		
-		embed = discord.Embed(title=title)
-		
-		await ctx.response.defer() # do not delete future kj need to defer before editing embed for some reason 
-
-		return await ctx.edit_original_response(embed = embed, view = None)
 
 		
 
