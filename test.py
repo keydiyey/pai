@@ -1,5 +1,18 @@
 import utils.transactions as transaction
+import utils.database as database
+from datetime import datetime
 
-transaction.transfer_credits("845699992886050847", "757945524937818141", amount = 1000 )
+date = datetime.now().timestamp()
 
- 
+
+print(date)
+
+data = database.load()
+
+
+marriage_data = data[UID]['marriage'] 
+
+marriage_data |=  {"x" : "07 - 31 - 1999"} 
+
+
+database.update(data)

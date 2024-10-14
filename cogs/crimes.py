@@ -7,6 +7,8 @@ from random import randint
 import asyncio
 import json
 
+from utils import imageutil
+
 
 # Known Bugs and Status
 # ✅ adding of roles for punishment
@@ -24,12 +26,6 @@ class Crimes(commands.Cog):
 		self.probability = 23.4
 		self.min_timeout = 20
 		self.max_timeout = 120
-
-	def image_url(self):
-		with open('./assets/data/gifs.json', 'r', encoding="utf-8") as data:
-			image_urls = json.load(data)
-		n = randint(0, len(image_urls["jail"])-1)
-		return image_urls["jail"][n]
 
 	def init_roles(self):
 		try:
@@ -97,9 +93,8 @@ class Crimes(commands.Cog):
 						title=title, 
 						description=description, 
 						color=0xffd9cc)
-		embed.set_image(url = self.image_url())
+		embed.set_image(url = imageutil.get_jail_gif())
 		embed.set_footer(text=footer_description)
-		
 		await ctx.respond(embed = embed)
 
 		# ① Gacha time
@@ -109,13 +104,8 @@ class Crimes(commands.Cog):
 		task_2 = asyncio.create_task(self.punishment(ctx = ctx, n = y, member = user, role = inmate_role))
 
 
-		await asyncio.gather(task_1, task_2)  # Wait for both tasks to finish
-		return 
-	
-
+		return await asyncio.gather(task_1, task_2)  # Wait for both tasks to finish
 		
-
-
 def setup(bot):
 	bot.add_cog(Crimes(bot))
  

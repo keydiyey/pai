@@ -32,16 +32,13 @@ class Miscellaneous(commands.Cog):
 			setup = jokes['setup']
 			delivery = jokes['delivery']
 		except KeyError as e:
-			setup = None
+			setup = ""
 			delivery = jokes['joke']
 
 		finally:
-			embed = discord.Embed(title = setup, description= f"🤡 | {delivery}", color=0xffd9cc)
+			embed = discord.Embed(title = f"🤡 | {setup}", description= f"{delivery}", color=0xffd9cc)
 			await ctx.respond(embed = embed)
 			
-		
-
-
 	@commands.slash_command(name="8b", description="eight ball!")
 	async def eightball(self, ctx, *, question):		
 		with open("./assets/data/eightball.json", "r") as eb:
@@ -98,31 +95,6 @@ class Miscellaneous(commands.Cog):
 		embed.add_field(name = "Example" , value = example)
 
 		await ctx.respond(embed = embed)
-
-
-	@commands.command()
-	async def box(self, ctx):
-		with open("data/fortune.json", "r") as winfo:
-			fortunes = json.load(winfo)
-
-		random.shuffle(fortunes["fortune"])
-
-		n = random.randint(0, len(fortunes["fortune"])-1)
-
-		fortune = fortunes["fortune"][n]
-
-
-		msg = await ctx.send(".")
-		for n in range(3):
-			await asyncio.sleep(1)
-			await msg.edit(content = ".        ＿＿＿＿\n     /       /        / |\n    |￣￣￣￣|   |\n    |＿＿＿＿| /")
-			await asyncio.sleep(1)
-
-			if n == 2:
-				await msg.edit(content = f"**{fortune}**\n        ∧＿∧＿＿\n  ／(´･ω･`)   /  \ \n／|￣￣￣￣|\ /\n    |＿＿＿＿|／")
-			else:	
-				await msg.edit(content = f".\n        ∧＿∧＿＿\n  ／(´･ω･`)   /  \ \n／|￣￣￣￣|\ /\n    |＿＿＿＿|／")
-
 
 def setup(bot):
 	bot.add_cog(Miscellaneous(bot))

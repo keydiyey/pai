@@ -15,7 +15,11 @@ def load():
 #----------------------------- Finalize Changes
 def update(new_data):
 	with open(USERS_PATH, "w") as u:
-		json.dump(new_data, u, indent=4)
+		try:
+			json.dump(new_data, u, indent=4)
+		except Exception as e:
+			print(e)
+		
 
 #----------------------------- Check if exists
 
@@ -25,29 +29,6 @@ def is_existing(UID):
 		return True    
 	else:
 		return False
-
-
-#-------------------------- Fetch Data Requests
-def get(UID, type=None):
-	data = load()
-	UID = str(UID)
-	if type == None:
-		output = data[UID]
-	else:
-		output = data[UID][type]
-	return output
-
-def get_credits(user_id):
-	return get(user_id, "credits")
-
-def get_reputation(user_id):
-	return get(user_id, "reputation")
-
-def get_deaths(user_id):
-	return get(user_id, "deaths")
-
-def get_jailtime(user_id):
-	return get(user_id, "jailtime")
 
 
 

@@ -4,10 +4,11 @@ from random import randint
 import discord
 
 def check_if_exists(func):
+	
 	def inner(**kwargs):
 		UID = kwargs.get("UID")
 		data = database.load()
-		
+		print("at check if exist")
 		if str(UID) in data:
 			func(**kwargs)
 
