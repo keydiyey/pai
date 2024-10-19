@@ -28,8 +28,11 @@ cogs = [
     'cogs.fortune',
     'cogs.roleplay',
     'cogs.profile',
-    'cogs.marriage',
-    #-----------  --------------
+    
+    #----------- MARRIAGE ------------
+    'cogs.marriage.marry',
+    'cogs.marriage.divorce',
+
     'cogs.crimes'
 
 ]

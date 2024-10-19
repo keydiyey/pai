@@ -8,6 +8,8 @@ from datetime import datetime
 
 import utils.database as db
 
+import utils.users as users
+
 # Known Bugs and Status
 # ✅ 
 # ⬜ 
@@ -20,21 +22,8 @@ async def add(UID, MID):
 	date = round(datetime.now().timestamp())
 
 	marriage_data = data[UID]['marriage'] 
-
 	marriage_data |=  {MID : date} 
-
 	return db.update(data)
-
-async def delete(UID):
-	UID =str(UID)
-	data = db.load()
-
-	marriage_data = data[UID]['marriage'] 
-
-	marriage_data.pop(UID)
-
-	return db.update(data)
-
 
 class marriage_buttons(discord.ui.View):
 	def __init__(self, *items, timeout = 180, disable_on_timeout = False, bot, user, member):
@@ -45,6 +34,7 @@ class marriage_buttons(discord.ui.View):
 
 	async def interaction_check(self, interaction: discord.Interaction):
 		return self.member.id == interaction.user.id
+	
 
 	# Checking User Profile
 	@discord.ui.button(label="Yes", style=discord.ButtonStyle.green, emoji="✅") 
@@ -68,12 +58,12 @@ class marriage_buttons(discord.ui.View):
 			
 		except Exception as e:
 			print(e)
-
-		
+			pass
 
 	@discord.ui.button(label="No", style=discord.ButtonStyle.red, emoji="❎") 
 	async def reject_callback(self, button, interaction, member, amount):
 		return False
+
 
 class Marriage(commands.Cog):
 	def __init__(self, bot):
@@ -85,26 +75,38 @@ class Marriage(commands.Cog):
 	@commands.cooldown(1, 30, commands.BucketType.user)
 	async def marry(self, ctx:discord.ApplicationContext, member: discord.Member):
 		user = ctx.user
-		embed = discord.Embed(title=f"{user.display_name} has proposed to {member.display_name}!",
-						description="Do you take this woman to be your wife, to live together in (holy) matrimony, to love her, to honor her, to comfort her, and to keep her in sickness and in health, forsaking all others, for as long as you both shall live?",
-						color = 0xf5e2e4)
-		embed.set_thumbnail(url="https://pbs.twimg.com/media/GFn9BZVawAAP_eJ.png")
-		
-		return await ctx.respond(embed = embed, view = marriage_buttons(timeout=60, bot=self.bot, user=user, member=member))
 
-		
+		data = db.load()
+		date = round(datetime.now().timestamp())
 
-		
+		marriage_data = data[user.id]['marriage'] 
 
-	@commands.slash_command(name = "date", description = "marry another member!")
-	@commands.cooldown(1, 30, commands.BucketType.user)
-	async def date(self, ctx:discord.ApplicationContext, member: discord.Member):
-		pass
+		if member == self.bot or member == user:
+			embed = discord.Embed(title=f"⚠ |  ",
+							description="You cannot marry this user.",
+							color = 0xf5e2e4)
+			
+			return await ctx.respond(embed = embed)
+			
+		elif member.id in marriage_data:
+			embed = discord.Embed(title=f"⚠ |  ",
+							description="You are already married to this user.",
+							color = 0xf5e2e4)
+			return await ctx.respond(embed = embed)
 
-	@commands.slash_command(name = "divorce", description = "marry another member!")
-	@commands.cooldown(1, 30, commands.BucketType.user)
-	async def divorce(self, ctx:discord.ApplicationContext, member: discord.Member):
-		pass
+			
+		else:
+			embed = discord.Embed(title=f"{user.display_name} has proposed to {member.display_name}!",
+							description=f"Do you take {user.mention} to be your wife, to live together in (holy) matrimony, to love her, to honor her, to comfort her, and to keep her in sickness and in health, forsaking all others, for as long as you both shall live?",
+							color = 0xf5e2e4)
+			embed.set_thumbnail(url="https://pbs.twimg.com/media/GFn9BZVawAAP_eJ.png")
+			
+			return await ctx.respond(embed = embed, 
+							view = marriage_buttons(
+								timeout=60, 
+								bot=self.bot, 
+								user=user, 
+								member=member))
 
 
 def setup(bot):

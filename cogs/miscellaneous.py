@@ -68,6 +68,52 @@ class Miscellaneous(commands.Cog):
 		else:
 			embed = discord.Embed(description =f"Encountered an error while fetching url.", color=0xffd9cc)
 			return await ctx.send(embed = embed)
+		
+	@commands.slash_command(name = "wait",description = "they dont love you like i love you" )
+	async def wait(self, ctx):
+
+		description_1 = r"""
+						```
+						✋🏻﹏﹏∧
+						||~ω~｀ )
+						/      ,✋🏻 
+						(   ﹏  (
+						`ヽ_) ヽ_)
+						```
+						"""
+		
+		description_2 = r"""
+						```
+						  ∧﹏﹏∧
+    					 ( ・ω・ )
+						 /    ♥ ,
+						(   ﹏  (
+						 ヽ_) ヽ_)
+						```
+						"""
+		
+		description_3 = r"""
+				```
+				     ∧﹏﹏∧
+                    (・ω・  )
+					, ♥     \
+					 )  ﹏   )
+					(_ノ  (_ノ
+				```
+				"""
+		
+		embed = discord.Embed(description = description_1, color=0xffd9cc)
+
+		await ctx.response.defer()
+		await ctx.respond(embed = embed)
+		await asyncio.sleep(2)
+		frames = [description_2, description_3]
+		for i in range(3):
+			for frame in frames:
+				embed = discord.Embed(description = frame, color=0xffd9cc)
+				await ctx.edit(embed=embed)
+		
+		return
 
 	@commands.slash_command(name = "urban",description = "uhh dick shawn awry" )
 	async def urban(self, ctx, *, term):
