@@ -30,8 +30,8 @@ cogs = [
     'cogs.profile',
     
     #----------- MARRIAGE ------------
-    'cogs.marriage.marry',
-    'cogs.marriage.divorce',
+    #'cogs.marriage.marry',
+    #'cogs.marriage.divorce',
 
     'cogs.crimes'
 
